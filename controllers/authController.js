@@ -57,7 +57,7 @@ if(!match){
     return res.status(400).json({msg:"invalid refresh token"})
 }
 const acc = jwt.sign({id:match.id,email:match.email},process.env.ACCESS_SECRET,{expiresIn:"15m"})
-res.status(200).json({msg:"access token generated",accessToken:acc})
+res.status(200).json({msg:"refresh token generated",accessToken:acc})
     } catch (error) {
 res.status(400).json({msg:"cookie error",e:error.message})
     }
@@ -65,8 +65,9 @@ res.status(400).json({msg:"cookie error",e:error.message})
 
 export const logout = async (req, res) => {
     try {
-
+        res.clearCookie("reftoken")
+        res.status(200).json({msg:"Logout Successfull......."})
     } catch (error) {
-
+        res.status(400).json({msg:"Invalid Token"})
     }
 }
